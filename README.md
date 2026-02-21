@@ -8,10 +8,10 @@ This project implements a **Retrieval-Augmented Generation (RAG)** system using 
 
 ### Key Features
 
-- ✅ **100% Serverless** - Zero cost when idle
-- ✅ **AWS Free Tier Compatible** - Runs within free-tier limits
-- ✅ **Multi-Vector DB** - Supports Pinecone & pgvector
-- ✅ **Cost Analysis** - Serverless vs dedicated cost comparison included
+- **100% Serverless** - Zero cost when idle
+- **AWS Free Tier Compatible** - Runs within free-tier limits
+- **Multi-Vector DB** - Supports Pinecone & pgvector
+- **Cost Analysis** - Serverless vs dedicated cost comparison included
 
 ---
 
