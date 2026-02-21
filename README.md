@@ -128,7 +128,14 @@ cp .env.example .env
 cd infra/terraform
 terraform init
 terraform apply
+<<<<<<< HEAD
+=======
 
 # 5. Test
 python -m pytest tests/
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 7d96494 (Update README to English)
+>>>>>>> HEAD@{1}
