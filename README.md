@@ -1,38 +1,32 @@
-# Serverless RAG για Εταιρική Γνώση
-
-## 📚 Μεταπτυχιακή Εργασία - Cloud Computing & AI
-
-**Θέμα:** Αρχιτεκτονική RAG χωρίς διακομιστή (Serverless) για Εταιρική Γνώση
+# Serverless RAG for Enterprise Knowledge
 
 ---
 
-## Περιγραφή
+## Overview
 
-Αυτό το project υλοποιεί ένα σύστημα **Retrieval-Augmented Generation (RAG)**
-χρησιμοποιώντας serverless υπηρεσίες AWS. Το σύστημα επιτρέπει στους χρήστες να
-υποβάλλουν ερωτήματα σε φυσική γλώσσα πάνω σε εταιρικά έγγραφα.
+This project implements a **Retrieval-Augmented Generation (RAG)** system using AWS serverless services. It allows users to query corporate documents in natural language and receive accurate, source-cited answers.
 
-### Βασικά Χαρακτηριστικά
+### Key Features
 
-- ✅ **100% Serverless** - Μηδενικό κόστος όταν δεν χρησιμοποιείται
-- ✅ **AWS Free Tier Compatible** - Λειτουργεί εντός δωρεάν ορίων
-- ✅ **Multi-Vector DB** - Υποστηρίζει Pinecone & pgvector
-- ✅ **Cost Analysis** - Σύγκριση κόστους serverless vs dedicated
+- ✅ **100% Serverless** - Zero cost when idle
+- ✅ **AWS Free Tier Compatible** - Runs within free-tier limits
+- ✅ **Multi-Vector DB** - Supports Pinecone & pgvector
+- ✅ **Cost Analysis** - Serverless vs dedicated cost comparison included
 
 ---
 
-## Αρχιτεκτονική
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         ΧΡΗΣΤΕΣ                                 │
-│         Web App  |  Slack Bot  |  API Client                    │
+│                           CLIENTS                               │
+│           Web App  |  Slack Bot  |  API Client                  │
 └────────────────────────────┬────────────────────────────────────┘
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    AWS API Gateway                              │
-│              (REST API + Rate Limiting)                         │
+│                      AWS API Gateway                            │
+│                (REST API + Rate Limiting)                       │
 └────────────────────────────┬────────────────────────────────────┘
                              │
           ┌──────────────────┼──────────────────┐
@@ -48,64 +42,64 @@
           │                 │                  │
           ▼                 ▼                  ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                      STORAGE LAYER                              │
+│                        STORAGE LAYER                            │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
 │  │    S3    │  │ DynamoDB │  │ Pinecone │  │   SQS    │        │
 │  │  (Docs)  │  │(Metadata)│  │(Vectors) │  │ (Queue)  │        │
-│  │  5GB Free│  │ 25GB Free│  │100K Free │  │ 1M Free  │        │
+│  │ 5GB Free │  │25GB Free │  │100K Free │  │ 1M Free  │        │
 │  └──────────┘  └──────────┘  └──────────┘  └──────────┘        │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Τεχνολογίες
+## Stack
 
-| Component | Τεχνολογία | Λόγος Επιλογής |
-|-----------|------------|----------------|
+| Component | Technology | Why |
+|-----------|------------|-----|
 | Compute | AWS Lambda | Pay-per-use, auto-scale |
 | API | API Gateway | Managed, auth integration |
 | Vector DB | Pinecone | 100K free vectors |
-| Storage | S3 + DynamoDB | Free tier generous |
-| Embeddings | OpenAI text-embedding-3-small | Best price/performance |
+| Storage | S3 + DynamoDB | Generous free tier |
+| Embeddings | OpenAI text-embedding-3-small | Best price/performance ratio |
 | LLM | GPT-4o-mini | Cost-optimized |
-| IaC | Terraform | Multi-cloud support |
+| IaC | Terraform | Reproducible deployments |
 
 ---
 
-## Δομή Project
+## Project Structure
 
 ```
 serverless-rag-project/
 ├── src/
 │   ├── lambdas/
-│   │   ├── ingestion/    # Document processing
+│   │   ├── ingestion/    # Document processing & chunking
 │   │   ├── embedding/    # Vector generation
 │   │   └── query/        # RAG query handling
 │   └── layers/
-│       └── common/       # Shared utilities
+│       └── common/       # Shared utilities & VectorDB abstraction
 ├── infra/
 │   └── terraform/        # Infrastructure as Code
 ├── data/
 │   └── sample_docs/      # Test documents
 ├── benchmarks/
-│   ├── scripts/          # Performance tests
+│   ├── scripts/          # Performance & cost analysis scripts
 │   └── results/          # Benchmark outputs
 ├── tests/
 │   ├── unit/
 │   └── integration/
 └── docs/
-    └── report.docx       # Ακαδημαϊκή έκθεση
+    └── create_report.js  # Academic report generator
 ```
 
 ---
 
-## Εγκατάσταση
+## Getting Started
 
-### Προαπαιτούμενα
+### Prerequisites
 
 ```bash
-# Απαιτούμενα εργαλεία
+# Required tools
 - Python 3.11+
 - Node.js 18+
 - AWS CLI (configured)
@@ -113,14 +107,14 @@ serverless-rag-project/
 
 # API Keys
 - OpenAI API key
-- Pinecone API key (free: pinecone.io)
+- Pinecone API key (free tier: pinecone.io)
 ```
 
 ### Quick Start
 
 ```bash
 # 1. Clone
-git clone <repo>
+git clone https://github.com/Giotros/Serverless-Rag.git
 cd serverless-rag-project
 
 # 2. Install dependencies
@@ -134,3 +128,10 @@ cp .env.example .env
 cd infra/terraform
 terraform init
 terraform apply
+<<<<<<< HEAD
+=======
+
+# 5. Test
+python -m pytest tests/
+```
+>>>>>>> 7d96494 (Update README to English)
