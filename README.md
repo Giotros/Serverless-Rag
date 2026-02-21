@@ -135,7 +135,3 @@ terraform apply
 python -m pytest tests/
 <<<<<<< HEAD
 ```
-=======
-```
->>>>>>> 7d96494 (Update README to English)
->>>>>>> HEAD@{1}
