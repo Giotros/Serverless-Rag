@@ -134,35 +134,3 @@ cp .env.example .env
 cd infra/terraform
 terraform init
 terraform apply
-
-# 5. Test
-python -m pytest tests/
-```
-
----
-
-## Benchmarks
-
-### Σύγκριση Vector Databases (10K documents)
-
-| Metric | Pinecone | pgvector (Aurora) |
-|--------|----------|-------------------|
-| P50 Latency | 45ms | 85ms |
-| P99 Latency | 120ms | 250ms |
-| Cold Start | N/A | 5-8s |
-| Monthly Cost | $0 (free tier) | $50+ |
-
-### Σύγκριση Κόστους (1K queries/day)
-
-| Αρχιτεκτονική | Μηνιαίο Κόστος |
-|---------------|----------------|
-| **Serverless** | ~$35-50 |
-| **Dedicated VM** | ~$150-200 |
-
-**Εξοικονόμηση: 65-75%** με serverless
-
----
-
-## Άδεια Χρήσης
-
-MIT License
